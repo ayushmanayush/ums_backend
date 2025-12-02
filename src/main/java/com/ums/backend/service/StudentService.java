@@ -1,12 +1,12 @@
 package com.ums.backend.service;
 import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import com.ums.backend.entity.*;
 import com.ums.backend.repository.*;
+import java.util.*;
+
+
 @Service
 public class StudentService{
   @Autowired
@@ -21,7 +21,10 @@ public class StudentService{
     student.setYearAdmission(reg_year);
     return studentrepo.save(student);
   }
-  public Student findStudent(String id){
-    return studentrepo.getReferenceById(id);
+  public List<Student> getallstudents(){
+    return studentrepo.findAll();
   }
+  public Student findStudent(String reg){
+    return studentrepo.findById(reg).orElse(null);
+}
 }

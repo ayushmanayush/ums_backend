@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ums.backend.entity.Student;
 import com.ums.backend.repository.Studentrepository;
 import com.ums.backend.service.StudentService;
-
+import java.util.*;
 
 @RestController
 @RequestMapping("/students")
@@ -25,8 +25,12 @@ public class StudentController {
         return studentservice.createStudent(student);
     }
     @GetMapping
-    public String getname(){
-        return studentservice.findStudent("125001").getFirstName();
+    public List<Student> getallStudent(){
+        return studentservice.getallstudents();
+    }
+    @GetMapping("/{regId}")
+    public Student getalldetails(@PathVariable String regId){
+        return studentservice.findStudent(regId);
     }
 
 }   
