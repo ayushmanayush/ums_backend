@@ -1,15 +1,19 @@
 package com.ums.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ums.backend.dto.StudentRequestDto;
 import com.ums.backend.entity.Student;
 import com.ums.backend.service.StudentService;
 import java.util.*;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import com.ums.backend.dto.*;
 
 @RestController
 @RequestMapping("/students")
@@ -18,32 +22,32 @@ public class StudentController {
     private StudentService studentservice;
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student ) {
-        return studentservice.createStudent(student);
+    public ResponseEntity<StudentResponseDto> createStudent(@RequestBody StudentRequestDto student ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentservice.createStudentDto(student));
     }
     @GetMapping
-    public List<Student> getallStudent(){
-        return studentservice.getallstudents();
+    public ResponseEntity<List<Student>> getallStudent(){
+        return ResponseEntity.ok(studentservice.getallstudents());
     }
     @GetMapping("/{regId}")
-    public Student getalldetails(@PathVariable String regId){
-        return studentservice.findStudent(regId);
+    public ResponseEntity<Student> getalldetails(@PathVariable String regId){
+        return ResponseEntity.ok(studentservice.findStudent(regId));
     }
     @PutMapping("/{regId}")
-    public String UpdateStudent(@PathVariable String regId, @RequestBody Student stuobj) {
+    public ResponseEntity<String> UpdateStudent(@PathVariable String regId, @RequestBody Student stuobj) {
         studentservice.updateStudent(regId, stuobj);
 
-        return "Successfully updated Student with RegId: "+regId;
+        return ResponseEntity.ok(regId+ " Updated Successfully");
     }
     @PatchMapping("/{regId}")
-    public String PatchUpdate(@PathVariable String regId, @RequestBody Student updatingValue){
+    public ResponseEntity<String> PatchUpdate(@PathVariable String regId, @RequestBody Student updatingValue){
         String updateprocess = studentservice.UpdatePatch(regId, updatingValue);
-        return updateprocess;
+        return ResponseEntity.ok(updateprocess);
     }
     @DeleteMapping("/{regId}")
-    public String deleteStudenT(@PathVariable String regId){
-        String deleted = studentservice.deleteStudent(regId);
-        return deleted;
+    public ResponseEntity<Void> deleteStudenT(@PathVariable String regId){
+        studentservice.deleteStudent(regId);
+        return ResponseEntity.noContent().build();
     }
 
 }   

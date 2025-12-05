@@ -2,16 +2,48 @@ package com.ums.backend.service;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ums.backend.entity.*;
 import com.ums.backend.repository.*;
 import java.util.*;
 import com.ums.backend.exception.StudentnotFound;
-
+import com.ums.backend.dto.*;
 
 @Service
+@Transactional
 public class StudentService{
+
   @Autowired
   private Studentrepository studentrepo;
+
+  public StudentResponseDto createStudentDto(StudentRequestDto stud){
+    Student newStudent = new Student();
+    newStudent.setFirstName(stud.getFirstName());
+    newStudent.setLastName(stud.getLastName());
+    newStudent.setAddress(stud.getAddress());
+    newStudent.setPhoneNumber(stud.getPhoneNumber());
+    newStudent.setDepartment(stud.getDepartment());
+    newStudent.setEmail(stud.getEmail());
+    newStudent.setDob(stud.getDob());
+    String reg_year = String.valueOf(LocalDate.now().getYear());
+    int year = (Integer.parseInt(reg_year.substring(2)))*1000;
+    int count_student = (int)studentrepo.count();
+    year += count_student + 1;
+    String reg = "1" + String.valueOf(year);
+    newStudent.setRegid(reg);
+    newStudent.setYearAdmission(reg_year);
+    Student savedStudent =  studentrepo.save(newStudent);
+    StudentResponseDto studResponse = new StudentResponseDto();
+    studResponse.setFirstName(savedStudent.getFirstName());
+    studResponse.setLastName(savedStudent.getLastName());
+    studResponse.setDepartment(savedStudent.getDepartment());
+    studResponse.setRegid(savedStudent.getRegid());
+    studResponse.setYearOfAdmission(savedStudent.getYearAdmission());
+    return studResponse;
+  }
+
+
   public Student createStudent(Student student){
     String reg_year = String.valueOf(LocalDate.now().getYear());
     int year = (Integer.parseInt(reg_year.substring(2)))*1000;
@@ -20,6 +52,7 @@ public class StudentService{
     String reg = "1" + String.valueOf(year);
     student.setRegid(reg);
     student.setYearAdmission(reg_year);
+
     return studentrepo.save(student);
   }
 
