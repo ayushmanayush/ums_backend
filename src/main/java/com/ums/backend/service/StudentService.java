@@ -99,9 +99,8 @@ public class StudentService{
     return "Student details updated Successfully with regId "+regId;
   }
 
-  public String deleteStudent(String regId){
-      studentrepo.findById(regId).orElseThrow(() ->new StudentnotFound("Student not found with regId: "+regId));
-      studentrepo.deleteById(regId);
-    return "Student deleted from database with regID: "+regId; 
+  public void deleteStudent(String regId){
+      studentrepo.findById(regId).orElseThrow(()-> new StudentnotFound("Student not found with regId "+regId));
+      studentrepo.deleteById(regId); 
   }
 }

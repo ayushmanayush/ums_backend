@@ -2,7 +2,7 @@ package com.ums.backend.mapper;
 import com.ums.backend.entity.*;
 
 import org.springframework.stereotype.Component;
-
+import java.util.*;
 import com.ums.backend.dto.*;
 @Component
 public class TeacherCreationMapper {
@@ -26,5 +26,13 @@ public class TeacherCreationMapper {
         teacher_sender.setPhoneNumber(teacher.getPhoneNumber());
         teacher_sender.setEmail(teacher.getEmail());
         return teacher_sender;
+    }
+    public List<TeacherResponseDto> toList(List<Teacher> teacher){
+        List<TeacherResponseDto> list = new ArrayList<>();
+        for(Teacher t : teacher){
+        list.add(toResponseDto(t));
+        }
+        return list;
+
     }
 }

@@ -25,6 +25,7 @@ public class StudentCreationMapper {
         senderdto.setDepartment(student.getDepartment());
         senderdto.setRegid(student.getRegid());
         senderdto.setYearOfAdmission(student.getYearAdmission());
+        senderdto.setPhoneNumber(student.getPhoneNumber());
         return senderdto; 
     }
 }

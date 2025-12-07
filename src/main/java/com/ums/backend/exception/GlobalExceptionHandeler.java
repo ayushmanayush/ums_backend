@@ -18,4 +18,12 @@ public class GlobalExceptionHandeler {
         map.put("TimeStamp",LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
     }
+
+    @ExceptionHandler(TeacherNotFoundException.class)
+    public ResponseEntity<?> handelTeacherNotFound(TeacherNotFoundException ex){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("message",ex.getMessage());
+        map.put("Ststus",HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(map);
+    }
 }
