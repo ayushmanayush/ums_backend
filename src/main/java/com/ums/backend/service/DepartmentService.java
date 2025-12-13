@@ -3,6 +3,7 @@ package com.ums.backend.service;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ums.backend.dto.DepartmentRequestDto;
 import com.ums.backend.dto.DepartmentResponseDto;
@@ -11,7 +12,6 @@ import com.ums.backend.mapper.DepartmentCreationMapper;
 import com.ums.backend.mapper.DepartmentUpdateMapper;
 import com.ums.backend.repository.Departmentrepository;
 import com.ums.backend.exception.*;
-import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,6 @@ public DepartmentResponseDto createDepartment(DepartmentRequestDto departmentBod
 public List<DepartmentResponseDto> getDto(){
     List<Department> list = departmentrepo.findAll();
     List<DepartmentResponseDto> listToSend = new ArrayList<>();
-    if(list.isEmpty()){
-        return null;
-    }
     for(Department i: list){
         listToSend.add(departmentmapper.toUser(i));
     }

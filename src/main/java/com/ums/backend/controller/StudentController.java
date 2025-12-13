@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ums.backend.dto.StudentRequestDto;
-import com.ums.backend.entity.Student;
 import com.ums.backend.service.StudentService;
 import java.util.*;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,7 +21,7 @@ public class StudentController {
     private StudentService studentservice;
 
     @PostMapping
-    public ResponseEntity<StudentResponseDto> createStudent(@RequestBody StudentRequestDto student ) {
+    public ResponseEntity<StudentResponseDto> createStudent(@RequestBody StudentRequestDto student) {
         return ResponseEntity.status(HttpStatus.CREATED).body(studentservice.createStudentDto(student));
     }
     @GetMapping
@@ -34,13 +33,13 @@ public class StudentController {
         return ResponseEntity.ok(studentservice.findStudent(regId));
     }
     @PutMapping("/{regId}")
-    public ResponseEntity<String> UpdateStudent(@PathVariable String regId, @RequestBody Student stuobj) {
+    public ResponseEntity<String> UpdateStudent(@PathVariable String regId, @RequestBody StudentRequestDto stuobj) {
         studentservice.updateStudent(regId, stuobj);
 
         return ResponseEntity.ok(regId+ " Updated Successfully");
     }
     @PatchMapping("/{regId}")
-    public ResponseEntity<String> PatchUpdate(@PathVariable String regId, @RequestBody Student updatingValue){
+    public ResponseEntity<String> PatchUpdate(@PathVariable String regId, @RequestBody StudentRequestDto updatingValue){
         String updateprocess = studentservice.UpdatePatch(regId, updatingValue);
         return ResponseEntity.ok(updateprocess);
     }
@@ -49,5 +48,17 @@ public class StudentController {
         studentservice.deleteStudent(regId);
         return ResponseEntity.noContent().build();
     }
-
+    @PutMapping("/admin/{regId}/section")
+    public ResponseEntity<StudentResponseDto> sectionUpdate(@PathVariable String regId,@RequestBody AssignsectionrequestDto section){
+        StudentResponseDto sender = studentservice.updateSection(regId, section);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sender);
+    }
+    @GetMapping("/admin/section/{sect}")
+    public ResponseEntity<List<StudentResponseDto>> getStudentBySection(@PathVariable String sect){
+        return ResponseEntity.status(HttpStatus.OK).body(studentservice.getStudentBySection(sect));
+    }
+    @GetMapping("/admin/department/{depId}")
+    public ResponseEntity<List<StudentResponseDto>> getStdentByDepartment(@PathVariable String depId){
+        return ResponseEntity.status(HttpStatus.OK).body(studentservice.getstudentsByDepartment(depId));
+    }
 }   

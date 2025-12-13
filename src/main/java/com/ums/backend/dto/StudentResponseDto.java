@@ -10,4 +10,5 @@ public class StudentResponseDto {
     private String department;
     private String yearOfAdmission;
     private String phoneNumber;
+    private String sectionName;
 }

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.*;
 // import lombok.Data;
 // @Data
 public class StudentRequestDto {
-    @NotNull(message = "First name should not be null")
+    @NotBlank(message = "First name should not be null")
     private String firstName;
     private String lastName;
     private String phoneNumber;

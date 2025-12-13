@@ -18,6 +18,11 @@ public class Student {
     private String email;
     private String phoneNumber;
     private String address;
-    private String department;
+    @ManyToOne
+    @JoinColumn(name = "departmentId",nullable = false)
+    private Department departmentName;
+    @ManyToOne
+    @JoinColumn(name ="sectionId",nullable = true)
+    private Section sectionName;
     private String yearAdmission;
 }

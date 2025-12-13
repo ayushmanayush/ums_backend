@@ -13,8 +13,7 @@ public class StudentCreationMapper {
         newStudent.setPhoneNumber(student.getPhoneNumber());
         newStudent.setEmail(student.getEmail());
         newStudent.setDob(student.getDob());
-        newStudent.setAddress(student.getAddress());
-        newStudent.setDepartment(student.getDepartment());
+        newStudent.setAddress(student.getAddress()); 
         return newStudent;
 
     }
@@ -22,10 +21,14 @@ public class StudentCreationMapper {
         StudentResponseDto senderdto = new StudentResponseDto();
         senderdto.setFirstName(student.getFirstName());
         senderdto.setLastName(student.getLastName());
-        senderdto.setDepartment(student.getDepartment());
+        senderdto.setDepartment(student.getDepartmentName().getDepartmentId());
         senderdto.setRegid(student.getRegid());
         senderdto.setYearOfAdmission(student.getYearAdmission());
         senderdto.setPhoneNumber(student.getPhoneNumber());
+        if(student.getSectionName() != null){
+        senderdto.setSectionName(student.getSectionName().getSectionId());
+        }
+        
         return senderdto; 
     }
 }

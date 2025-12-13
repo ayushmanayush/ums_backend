@@ -33,4 +33,12 @@ public class GlobalExceptionHandeler {
         map.put("Status", HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(map);
     }
+    @ExceptionHandler(SectionNotFound.class)
+    public ResponseEntity<?> helperSectionNotFound(SectionNotFound ex){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("message" , ex.getMessage());
+        map.put("status",HttpStatus.NOT_FOUND.value());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
+
+    }
 }
