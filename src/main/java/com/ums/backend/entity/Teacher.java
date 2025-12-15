@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -17,7 +19,9 @@ public class Teacher {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private String department;
+    @ManyToOne
+    @JoinColumn(name = "department_id",nullable = false)
+    private Department department;
     private LocalDate dateJoined;
     private String address;
 

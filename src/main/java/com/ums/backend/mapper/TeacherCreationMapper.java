@@ -13,7 +13,6 @@ public class TeacherCreationMapper {
         newTeacher.setPhoneNumber(teacher.getPhoneNumber());
         newTeacher.setEmail(teacher.getEmail());
         newTeacher.setAddress(teacher.getAddress());
-        newTeacher.setDepartment(teacher.getDepartment());
         return newTeacher;
     }
     public TeacherResponseDto toResponseDto(Teacher teacher){
@@ -21,7 +20,7 @@ public class TeacherCreationMapper {
         teacher_sender.setTeacherId(teacher.getTeacherId());
         teacher_sender.setFirstName(teacher.getFirstName());
         teacher_sender.setLastName(teacher.getLastName());
-        teacher_sender.setDepartment(teacher.getDepartment());
+        teacher_sender.setDepartment(teacher.getDepartment().getDepartmentId());
         teacher_sender.setDateJoined(teacher.getDateJoined());
         teacher_sender.setPhoneNumber(teacher.getPhoneNumber());
         teacher_sender.setEmail(teacher.getEmail());

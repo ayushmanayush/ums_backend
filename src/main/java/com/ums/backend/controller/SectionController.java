@@ -13,7 +13,7 @@ import com.ums.backend.dto.SectionResponseDto;
 import com.ums.backend.service.SectionService;
 
 @RestController
-@RequestMapping("/sections")
+@RequestMapping("/admin/sections")
 public class SectionController {
     @Autowired
     SectionService sectionservice;

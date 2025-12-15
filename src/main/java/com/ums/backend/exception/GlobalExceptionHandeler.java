@@ -41,4 +41,11 @@ public class GlobalExceptionHandeler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
 
     }
+    @ExceptionHandler(MappingAlreadyExists.class)
+    public ResponseEntity<?> helpermappingalreadyexists(MappingAlreadyExists ex){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("message" , ex.getMessage());
+        map.put("status",HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
+    }
 }

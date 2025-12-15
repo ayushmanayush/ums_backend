@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ums.backend.dto.TeacherRequestDto;
 import com.ums.backend.dto.TeacherResponseDto;
 import com.ums.backend.mapper.TeacherCreationMapper;
+import com.ums.backend.repository.Departmentrepository;
 import com.ums.backend.repository.TeacherRepository;
 import java.util.*;
 import jakarta.transaction.Transactional;
@@ -24,6 +25,8 @@ public class TeacherService {
     TeacherRepository teacherrepo;
     @Autowired
     TeacherUpdate teacherupdated;
+    @Autowired
+    Departmentrepository departmentrepo;
     public synchronized String getteacherId(){
         int value = 10000;
         int count = (int)teacherrepo.count();
@@ -33,9 +36,11 @@ public class TeacherService {
     }
 
     public TeacherResponseDto crateTeacherDto(TeacherRequestDto teacher){
+        Department dept = departmentrepo.findById(teacher.getDepartment()).orElseThrow(()-> new DepartmentNotFound("Department not available with deptId: "+teacher.getDepartment()));
         Teacher newTeacher = teachermapper.toEntityDto(teacher);
         newTeacher.setTeacherId(getteacherId());
         newTeacher.setDateJoined(LocalDate.now());
+        newTeacher.setDepartment(dept);
         Teacher savedTeacher = teacherrepo.save(newTeacher);
         return teachermapper.toResponseDto(savedTeacher);
     }
@@ -50,6 +55,8 @@ public class TeacherService {
     public TeacherResponseDto updateTecaherbyreg(String reg, TeacherRequestDto teacher){
         Teacher existing_teacher = teacherrepo.findById(reg).orElseThrow(()-> new TeacherNotFoundException("Teacher Not found with TeacherId: "+reg));
         Teacher updated_teacher = teacherupdated.updateTeacher(teacher, existing_teacher);
+        Department dept = departmentrepo.findById(teacher.getDepartment()).orElseThrow(()-> new DepartmentNotFound("Department not available with deptId: "+teacher.getDepartment()));
+        updated_teacher.setDepartment(dept);
         Teacher saved = teacherrepo.save(updated_teacher);
        return teachermapper.toResponseDto(saved);
     }

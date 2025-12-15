@@ -9,7 +9,6 @@ public class TeacherUpdate {
         existing.setFirstName(teacher.getFirstName());
         existing.setLastName(teacher.getLastName());
         existing.setAddress(teacher.getAddress());
-        existing.setDepartment(teacher.getDepartment());
         existing.setEmail(teacher.getEmail());
         existing.setPhoneNumber(teacher.getPhoneNumber());
         return existing;
