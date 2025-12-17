@@ -26,7 +26,8 @@ public class StudentService{
   Departmentrepository departmentrepo;
   @Autowired
   SectionRepository sectionrepo;
-
+  @Autowired
+  TeachingAssignmentRepository teachingAssignmentRepo;
 
   public synchronized String generateRegId(){
       String reg_year = String.valueOf(LocalDate.now().getYear());
@@ -137,4 +138,54 @@ public class StudentService{
     }
     return listToSend;
   }
+  public List<SubjectResponseDto> getSubjectsForStudent(String regId) {
+
+    Student student = studentrepo.findById(regId)
+        .orElseThrow(() -> new StudentnotFound("Student not found"));
+
+    String sectionId = student.getSectionName().getSectionId();
+
+    List<TeachingAssignment> assignments =
+        teachingAssignmentRepo.findBySection_sectionId(sectionId);
+
+    List<SubjectResponseDto> subjects = new ArrayList<>();
+
+    for (TeachingAssignment ta : assignments) {
+        Subject s = ta.getSubject();
+
+        SubjectResponseDto dto = new SubjectResponseDto();
+        dto.setSubjectId(s.getSubjectId());
+        dto.setSubjectName(s.getSubjectName());
+        dto.setCredit(s.getCredit());
+
+        subjects.add(dto);
+    }
+
+    return subjects;
+}
+public List<TeacherResponseDto> getTeachersForStudent(String regId) {
+
+    Student student = studentrepo.findById(regId)
+        .orElseThrow(() -> new StudentnotFound("Student not found"));
+
+    String sectionId = student.getSectionName().getSectionId();
+
+    List<TeachingAssignment> assignments =
+        teachingAssignmentRepo.findBySection_sectionId(sectionId);
+
+    List<TeacherResponseDto> teachers = new ArrayList<>();
+
+    for (TeachingAssignment ta : assignments) {
+        Teacher t = ta.getTeacher();
+
+        TeacherResponseDto dto = new TeacherResponseDto();
+        dto.setTeacherId(t.getTeacherId());
+        dto.setFirstName(t.getFirstName());
+        dto.setLastName(t.getLastName());
+
+        teachers.add(dto);
+    }
+
+    return teachers;
+}
 }

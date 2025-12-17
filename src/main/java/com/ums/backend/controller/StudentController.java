@@ -1,64 +1,32 @@
 package com.ums.backend.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.ums.backend.dto.StudentRequestDto;
+import com.ums.backend.dto.StudentResponseDto;
+import com.ums.backend.dto.SubjectResponseDto;
+import com.ums.backend.dto.TeacherResponseDto;
 import com.ums.backend.service.StudentService;
-import java.util.*;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import com.ums.backend.dto.*;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
+
     @Autowired
-    private StudentService studentservice;
-
-    @PostMapping
-    public ResponseEntity<StudentResponseDto> createStudent(@RequestBody StudentRequestDto student) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(studentservice.createStudentDto(student));
-    }
-    @GetMapping
-    public ResponseEntity<List<StudentResponseDto>> getallStudent(){
-        return ResponseEntity.ok(studentservice.getallstudents());
-    }
+    private StudentService studentService;
     @GetMapping("/{regId}")
-    public ResponseEntity<StudentResponseDto> getalldetails(@PathVariable String regId){
-        return ResponseEntity.ok(studentservice.findStudent(regId));
+    public ResponseEntity<StudentResponseDto> getProfile(@PathVariable String regId) {
+        return ResponseEntity.ok(studentService.findStudent(regId));
     }
-    @PutMapping("/{regId}")
-    public ResponseEntity<String> UpdateStudent(@PathVariable String regId, @RequestBody StudentRequestDto stuobj) {
-        studentservice.updateStudent(regId, stuobj);
-
-        return ResponseEntity.ok(regId+ " Updated Successfully");
+    @GetMapping("/{regId}/subjects")
+    public ResponseEntity<List<SubjectResponseDto>> getSubjects(@PathVariable String regId) {
+        return ResponseEntity.ok(studentService.getSubjectsForStudent(regId));
     }
-    @PatchMapping("/{regId}")
-    public ResponseEntity<String> PatchUpdate(@PathVariable String regId, @RequestBody StudentRequestDto updatingValue){
-        String updateprocess = studentservice.UpdatePatch(regId, updatingValue);
-        return ResponseEntity.ok(updateprocess);
+    @GetMapping("/{regId}/teachers")
+    public ResponseEntity<List<TeacherResponseDto>> getTeachers(@PathVariable String regId) {
+        return ResponseEntity.ok(studentService.getTeachersForStudent(regId));
     }
-    @DeleteMapping("/{regId}")
-    public ResponseEntity<Void> deleteStudenT(@PathVariable String regId){
-        studentservice.deleteStudent(regId);
-        return ResponseEntity.noContent().build();
-    }
-    @PutMapping("/admin/{regId}/section")
-    public ResponseEntity<StudentResponseDto> sectionUpdate(@PathVariable String regId,@RequestBody AssignsectionrequestDto section){
-        StudentResponseDto sender = studentservice.updateSection(regId, section);
-        return ResponseEntity.status(HttpStatus.CREATED).body(sender);
-    }
-    @GetMapping("/admin/section/{sect}")
-    public ResponseEntity<List<StudentResponseDto>> getStudentBySection(@PathVariable String sect){
-        return ResponseEntity.status(HttpStatus.OK).body(studentservice.getStudentBySection(sect));
-    }
-    @GetMapping("/admin/department/{depId}")
-    public ResponseEntity<List<StudentResponseDto>> getStdentByDepartment(@PathVariable String depId){
-        return ResponseEntity.status(HttpStatus.OK).body(studentservice.getstudentsByDepartment(depId));
-    }
-}   
+}

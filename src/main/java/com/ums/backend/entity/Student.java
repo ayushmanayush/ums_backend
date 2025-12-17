@@ -14,6 +14,7 @@ public class Student {
 
     private String firstName;
     private String lastName;
+    @Column(nullable = false)
     private LocalDate dob;
     private String email;
     private String phoneNumber;

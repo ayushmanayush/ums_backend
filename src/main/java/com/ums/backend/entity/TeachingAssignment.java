@@ -6,10 +6,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
 @Entity
-@Table(name = "teachingassignment")
+@Table(name = "teachingassignment",uniqueConstraints = @UniqueConstraint(columnNames = {"subject_id","section_id"}))
 @Data
 public class TeachingAssignment {
     @EmbeddedId
