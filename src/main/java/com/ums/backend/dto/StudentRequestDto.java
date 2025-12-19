@@ -10,6 +10,9 @@ public class StudentRequestDto {
     @NotBlank(message = "First name should not be null")
     private String firstName;
     private String lastName;
+    @Pattern(regexp = "^[0-9]\\d{9}$",
+        message = "Please enter Valid Phone Number"
+    )
     private String phoneNumber;
     @Email(message ="Please Enter a valid email")
     @NotBlank(message = "Email should not be blank")

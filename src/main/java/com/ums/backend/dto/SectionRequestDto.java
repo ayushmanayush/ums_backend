@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class SectionRequestDto {
-    @NotBlank
+    @NotBlank(message = "Section id should not be blank")
     private String sectionId;
-    @NotBlank
+    @NotBlank(message = "Department Id should not be blank")
     private String departmentName;
 }

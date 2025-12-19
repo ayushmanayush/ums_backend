@@ -10,8 +10,7 @@ import lombok.Data;
 @Table(name = "students")
 public class Student {
     @Id
-    private String Regid;
-
+    private String regid;
     private String firstName;
     private String lastName;
     @Column(nullable = false)

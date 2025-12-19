@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ums.backend.dto.DepartmentSubjectRequestDto;
 import com.ums.backend.service.DepartmentSubjectService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/admin/departmentsubjectmapping")
 public class DepartmentSubjectController {
     @Autowired
     DepartmentSubjectService deptsubjservice;
     @PostMapping
-    public ResponseEntity<String> createdeptsubj(@RequestBody DepartmentSubjectRequestDto deptsubj){
+    public ResponseEntity<String> createdeptsubj(@RequestBody @Valid DepartmentSubjectRequestDto deptsubj){
         deptsubjservice.createSubjectDepartmentMap(deptsubj);
         return ResponseEntity.status(HttpStatus.CREATED).body("Department <-> Subject Mapped Successfully");
     }

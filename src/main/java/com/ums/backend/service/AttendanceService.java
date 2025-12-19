@@ -128,7 +128,7 @@ public class AttendanceService {
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
         List<AttendanceRecord> records =
-                attendanceRecordRepo.findByStudent_RegId(regId);
+                attendanceRecordRepo.findByStudent_Regid(regId);
 
         return records.stream().map(r -> {
             AttendanceRecordTeacherViewDto dto =

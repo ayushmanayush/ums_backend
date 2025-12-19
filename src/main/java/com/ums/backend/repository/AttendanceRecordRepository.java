@@ -9,9 +9,9 @@ import com.ums.backend.entity.AttendanceRecord;
 
 public interface AttendanceRecordRepository extends JpaRepository<AttendanceRecord, Long> {
 
-    Optional<AttendanceRecord> findByAttendance_AttendanceIdAndStudent_RegId(Long attendanceId,String regId);
+    Optional<AttendanceRecord> findByAttendance_AttendanceIdAndStudent_Regid(Long attendanceId,String regId);
 
-    List<AttendanceRecord> findByStudent_RegId(String regId);
+    List<AttendanceRecord> findByStudent_Regid(String regId);
 
     List<AttendanceRecord> findByAttendance_Section_SectionId(String sectionId);
 

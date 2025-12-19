@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 @Data
 public class DepartmentRequestDto {
-    @NotBlank
+    @NotBlank(message = "Department id should not be blank")
     private String departmentId;
-    @NotBlank
+    @NotBlank(message = "Department name should not be blank")
     private String departmentName;
 }
